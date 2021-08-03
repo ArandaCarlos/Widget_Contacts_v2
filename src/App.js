@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import OpenWidget from "./Components/OpenWidget";
-import SearchStores from "./Components/SearchStores";
+import EditarContactoStore from "./Components/EditarContactoStore";
 import ZohoProvider, { useZohoContext } from './Context/ZohoContext';
 
 
@@ -9,10 +9,7 @@ function App() {
 
   return (
     <ZohoProvider>
-      {link == "openWidget" ? 
-          <OpenWidget setLink={setLink}/>
-        : link == "searchStores" ? 
-          <SearchStores setLink={setLink}/>:""}
+        <OpenWidget setLink={setLink}/>
     </ZohoProvider>
       
   );

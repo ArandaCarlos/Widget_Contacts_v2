@@ -10,6 +10,9 @@ export default function ZohoProvider({children}) {
    const [id, setID] = useState(null);
    const [record, setRecord] = useState(null);
    const [stores, setStores] = useState(null);
+   const [contactos, setContactos] = useState(null); 
+   const [contactoActual, setContactoActual] = useState(null);
+   const [contactosActualizar, setContactoActualizar] = useState([]);
 
    useEffect(() => {
 
@@ -25,9 +28,12 @@ export default function ZohoProvider({children}) {
             ZOHO.CRM.API.getRelatedRecords({Entity:"Brands",RecordID:id,RelatedList:"Stores"}).then((data)=>{
                setStores(data.data);
                console.log(data.data);
-           })
+            })
+            ZOHO.CRM.API.getRelatedRecords({Entity:"Brands",RecordID:id,RelatedList:"Contactos"}).then((data)=>{
+               setContactos(data.data);
+               console.log(data.data);
+            })
             
-         
          });
          
 
@@ -41,7 +47,7 @@ export default function ZohoProvider({children}) {
    }, []);
    
    return (
-      <ZohoContext.Provider value={{module: module, entity: entity, id:id, stores:stores}}>
+      <ZohoContext.Provider value={{module: module, entity: entity, id:id, stores:stores, contactos:contactos, contactoActual:contactoActual, setContactoActual:setContactoActual, contactosActualizar:contactosActualizar, setContactoActualizar:setContactoActualizar}}>
          {children}
       </ZohoContext.Provider>
    );
@@ -53,9 +59,9 @@ export const useZohoContext = () => {
 
    if (!context) throw new Error("UseWidget inside ZohoContext");
 
-   const { entity, module, id, stores} = context;
+   const { entity, module, id, stores,contactos, contactoActual, setContactoActual, contactosActualizar, setContactoActualizar } = context;
 
    return {
-      entity, module, id, stores
+      entity, module, id, stores, contactos, contactoActual, setContactoActual, contactosActualizar, setContactoActualizar 
    }
 }
